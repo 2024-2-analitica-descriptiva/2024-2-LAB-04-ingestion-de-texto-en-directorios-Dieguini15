@@ -28,7 +28,7 @@ def pregunta_01():
 
                 with open(file_path, "r", encoding="utf-8") as file:
                     phrase = file.read().strip()
-                    data.append({"phrase": phrase, "sentiment": sentiment})
+                    data.append({"phrase": phrase, "target": sentiment})
 
         df = pd.DataFrame(data)
         output_file = os.path.join(output_folder, f"{dataset_type}_dataset.csv")
