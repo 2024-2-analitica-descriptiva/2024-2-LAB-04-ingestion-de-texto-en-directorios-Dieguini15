@@ -6,29 +6,38 @@ Escriba el codigo que ejecute la accion solicitada en cada pregunta.
 """
 import os
 import pandas as pd
-def pregunta_01(input_folder, output_folder):
+
+def pregunta_01():
+    input_folder = r"C:/analiticadescriptiva/2024-2-LAB-04-ingestion-de-texto-en-directorios-Dieguini15/files/input"
+    output_folder = r"C:/analiticadescriptiva/2024-2-LAB-04-ingestion-de-texto-en-directorios-Dieguini15/files/output"
+
     os.makedirs(output_folder, exist_ok=True)
+
     for dataset_type in ["train", "test"]:
         dataset_path = os.path.join(input_folder, dataset_type)
-        if not os.path.exists(dataset_path):
-            raise FileNotFoundError(f"La carpeta {dataset_path} no existe.")
         data = []
+
         for sentiment in ["positive", "negative", "neutral"]:
             sentiment_path = os.path.join(dataset_path, sentiment)
+
             if not os.path.exists(sentiment_path):
-                raise FileNotFoundError(f"La carpeta {sentiment_path} no existe.")
+                continue
 
             for file_name in os.listdir(sentiment_path):
                 file_path = os.path.join(sentiment_path, file_name)
+
                 with open(file_path, "r", encoding="utf-8") as file:
                     phrase = file.read().strip()
                     data.append({"phrase": phrase, "sentiment": sentiment})
+
         df = pd.DataFrame(data)
         output_file = os.path.join(output_folder, f"{dataset_type}_dataset.csv")
         df.to_csv(output_file, index=False, encoding="utf-8")
-input_folder = r"C:\analiticadescriptiva\2024-2-LAB-04-ingestion-de-texto-en-directorios-Dieguini15\input"
-output_folder = r"C:\analiticadescriptiva\2024-2-LAB-04-ingestion-de-texto-en-directorios-Dieguini15\output"
-pregunta_01(input_folder,output_folder)
+
+if __name__ == "__main__":
+    pregunta_01()
+
+
 """
 La información requerida para este laboratio esta almacenada en el
 archivo "files/input.zip" ubicado en la carpeta raíz.
